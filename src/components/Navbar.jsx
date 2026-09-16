@@ -1,18 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const navbarItems = [
-        "Home",
-        "Generate",
-        "Contact"
-    ];
+    const navbarItems = [ { label: "Home", link: "/" }, { label: "Generate", link: "/generate" }, { label: "Contact", link: "/contact" } ];
+
+    const navigate = useNavigate()
 
     return (
         <>
             {/* Navbar */}
-            <nav className="flex flex-row justify-between items-center px-6 py-2 bg-gray-100">
+            <nav className="flex flex-row justify-between items-center px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md">
 
                 {/* Logo */}
                 <div className="flex flex-row items-center">
@@ -32,38 +32,25 @@ const Navbar = () => {
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex gap-8">
-                    {navbarItems.map((item, index) => (
-                        <p
-                            key={index}
-                            className="
-                                relative
-                                cursor-pointer
-                                text-gray-700
-                                hover:text-black
-                                after:absolute
-                                after:left-0
-                                after:-bottom-1
-                                after:h-[2px]
-                                after:w-0
-                                after:bg-black
-                                after:transition-all
-                                after:duration-300
-                                hover:after:w-full
-                            "
+                    {navbarItems.map((item) => (
+                        <NavLink
+                            key={item.link}
+                            to={item.link}
+                            className={({ isActive }) => ` text-lg cursor-pointer transition ${isActive ? "text-blue-600 font-semibold" : "text-gray-700 hover:text-black" } `}
                         >
-                            {item}
-                        </p>
+                            {item.label}
+                        </NavLink>
                     ))}
                 </div>
 
 
                 {/* Desktop Buttons */}
                 <div className="hidden md:flex gap-2">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => navigate('/login')}>
                         Login
                     </button>
 
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => navigate('/login')}>
                         Sign Up
                     </button>
                 </div>
@@ -143,9 +130,10 @@ const Navbar = () => {
                 {/* Sidebar Navigation */}
                 <div className="flex flex-col p-6 gap-6">
 
-                    {navbarItems.map((item, index) => (
-                        <p
-                            key={index}
+                    {navbarItems.map((item) => (
+                        <NavLink
+                            key={item.link}
+                            to={item.link}
                             onClick={() => setIsOpen(false)}
                             className="
                                 text-lg
@@ -155,18 +143,18 @@ const Navbar = () => {
                                 transition
                             "
                         >
-                            {item}
-                        </p>
+                            {item.label}
+                        </NavLink>
                     ))}
 
                     {/* Buttons */}
                     <div className="flex flex-col gap-3 mt-4">
 
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => { setIsOpen(false); navigate('/login'); }}>
                             Login
                         </button>
 
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded">
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={() => { setIsOpen(false); navigate('/login'); }}>
                             Sign Up
                         </button>
 
